@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Hotjar</title>
     
-    <!-- Script Cookiebot -->
-    <script id="CookieDeclaration" src="https://consent.cookiebot.com/093795f3-0e2f-4f23-8302-1bff97f59181/cd.js" type="text/javascript" async></script>
 
     <script type="text/javascript">
         function loadHotjar() {
@@ -20,28 +18,7 @@
             })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
         }
 
-        function checkConsent() {
-            try {
-                if (window.Cookiebot && Cookiebot.consents && typeof Cookiebot.consents.statistics !== "undefined") {
-                    if (Cookiebot.consents.statistics) {
-                        loadHotjar();
-                        console.log("✅ Consentement donné : Hotjar activé !");
-                    } else {
-                        console.log("❌ Consentement refusé : Hotjar désactivé.");
-                    }
-                } else {
-                    console.log("⚠️ Cookiebot pas encore prêt, re-vérification dans 500ms...");
-                    setTimeout(checkConsent, 500);
-                }
-            } catch (error) {
-                console.error("⚠️ Erreur dans la vérification du consentement Cookiebot :", error);
-                setTimeout(checkConsent, 500);
-            }
-        }
-
-        // Exécuter la vérification après chargement de Cookiebot
-        window.addEventListener("CookiebotOnConsentReady", checkConsent);
-        setTimeout(checkConsent, 1000); // Vérification manuelle après 1s si besoin
+        
     </script>
 </head>
 <body>
