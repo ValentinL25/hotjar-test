@@ -17,15 +17,23 @@
         })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
     }
 
-    // Écoute l'événement de Cookiebot pour voir si l'utilisateur a accepté les cookies
-    window.addEventListener("CookiebotOnConsentReady", function() {
-        if (Cookiebot.consents.statistics) {
-            loadHotjar();
-            console.log("✅ Consentement donné : Hotjar activé !");
+    // Vérifier si Cookiebot est bien défini
+    function checkCookiebot() {
+        if (typeof Cookiebot !== "undefined" && typeof Cookiebot.consents !== "undefined") {
+            if (Cookiebot.consents.statistics) {
+                loadHotjar();
+                console.log("✅ Consentement donné : Hotjar activé !");
+            } else {
+                console.log("❌ Consentement refusé : Hotjar désactivé.");
+            }
         } else {
-            console.log("❌ Consentement refusé : Hotjar désactivé.");
+            console.log("⚠️ Cookiebot non encore chargé, re-vérification dans 500ms...");
+            setTimeout(checkCookiebot, 500);
         }
-    });
+    }
+
+    // Attendre que Cookiebot soit prêt
+    window.addEventListener("CookiebotOnConsentReady", checkCookiebot);
 </script>
 
 
