@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Hotjar</title>
+    <script defer>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:5294908,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+</head>
+<body>
+    <h1>Bienvenue sur mon test Hotjar</h1>
+    <p>Clique sur les boutons ci-dessous pour voir les interactions capturées par Hotjar.</p>
+
+    <button onclick="alert('Bouton cliqué !')">Clique-moi</button>
+    <button onclick="document.body.style.backgroundColor = getRandomColor()">Changer la couleur</button>
+    <a href="page2.html">Aller à la page 2</a>
+
+    <script>
+        function getRandomColor() {
+            return '#' + Math.floor(Math.random()*16777215).toString(16);
+        }
+    </script>
+</body>
+</html>
