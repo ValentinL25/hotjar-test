@@ -6,15 +6,51 @@
     <title>Test Hotjar</title>
     
 
-    <script defer>
-        (function(h,o,t,j,a,r){
-            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-            h._hjSettings={hjid:5294908,hjsv:6};
-            a=o.getElementsByTagName('head')[0];
-            r=o.createElement('script');r.async=1;
-            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-            a.appendChild(r);
-        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    <!-- Script Cookiebot -->
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" 
+        data-cbid="093795f3-0e2f-4f23-8302-1bff97f59181" 
+        data-blockingmode="auto" 
+        type="text/javascript">
+    </script>
+
+    <!-- Script pour charger Hotjar uniquement si consentement -->
+    <script type="text/javascript">
+        function loadHotjar() {
+            (function(h,o,t,j,a,r){
+                h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+                h._hjSettings={hjid:5294908,hjsv:6};
+                a=o.getElementsByTagName('head')[0];
+                r=o.createElement('script');r.async=1;
+                r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+                a.appendChild(r);
+            })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+        }
+
+        // Fonction pour vérifier si l'utilisateur a donné son consentement
+        function checkConsent() {
+            try {
+                if (window.Cookiebot && Cookiebot.consents && typeof Cookiebot.consents.statistics !== "undefined") {
+                    if (Cookiebot.consents.statistics) {
+                        loadHotjar(); // Charge Hotjar si le consentement est donné
+                        console.log("✅ Consentement donné : Hotjar activé !");
+                    } else {
+                        console.log("❌ Consentement refusé : Hotjar désactivé.");
+                    }
+                } else {
+                    console.log("⚠️ Cookiebot pas encore prêt, re-vérification dans 500ms...");
+                    setTimeout(checkConsent, 500); // Vérifie toutes les 500ms si Cookiebot est prêt
+                }
+            } catch (error) {
+                console.error("⚠️ Erreur dans la vérification du consentement Cookiebot :", error);
+                setTimeout(checkConsent, 500); // Si erreur, réessaye après 500ms
+            }
+        }
+
+        // Lance la vérification une fois Cookiebot prêt
+        window.addEventListener("CookiebotOnConsentReady", checkConsent);
+        
+        // Si Cookiebot prend trop de temps à se charger, effectue une vérification manuelle après 1 seconde
+        setTimeout(checkConsent, 1000);
     </script>
 </head>
 <body>
